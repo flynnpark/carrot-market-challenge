@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler from '../../lib/server/withHandler';
+import db from '../../lib/server/db';
 
 interface SigninRequest extends NextApiRequest {
   body: {

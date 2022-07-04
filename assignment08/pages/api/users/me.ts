@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler from '../../../lib/server/withHandler';
+import db from '../../../lib/server/db';
+import { withApiSession } from '../../../lib/server/withSession';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const user = await db.user.findUnique({
@@ -29,4 +31,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   });
 }
 
-export default withHandler({ methods: ['GET'], handler, isPrivate: true });
+export default withApiSession(
+  withHandler({ methods: ['GET'], handler, isPrivate: true })
+);

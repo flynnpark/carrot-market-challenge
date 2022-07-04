@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import withHandler from '../../lib/server/withHandler';
+import db from '../../lib/server/db';
+import { withApiSession } from '../../lib/server/withSession';
 
 interface LoginRequest extends NextApiRequest {
   body: {
@@ -9,7 +11,6 @@ interface LoginRequest extends NextApiRequest {
 
 async function handler(req: LoginRequest, res: NextApiResponse) {
   const { email } = req.body;
-
   const user = await db.user.findUnique({
     where: {
       email,
@@ -35,4 +36,6 @@ async function handler(req: LoginRequest, res: NextApiResponse) {
   });
 }
 
-export default withHandler({ methods: ['POST'], handler, isPrivate: false });
+export default withApiSession(
+  withHandler({ methods: ['POST'], handler, isPrivate: false })
+);

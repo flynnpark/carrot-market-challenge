@@ -9,7 +9,6 @@ const Home: NextPage = () => {
     <div>
       <h1>{user?.name}</h1>
       <h3>{user?.email}</h3>
-      <h5>{user?.createdAt.toDateString()}</h5>
     </div>
   );
 };
