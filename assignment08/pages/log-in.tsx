@@ -1,16 +1,31 @@
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import useMutation from '../lib/client/useMutation';
+import { ResponseType } from '../lib/server/withHandler';
 
 interface LoginForm {
   email: string;
 }
 
+type LoginResponse = ResponseType<null>;
+
 const Login: NextPage = () => {
   const { register, handleSubmit } = useForm<LoginForm>();
+  const [login, { loading, data }] = useMutation<LoginResponse>('/api/login');
+  const router = useRouter();
 
   const onValid = (form: LoginForm) => {
-    console.log(form);
+    if (loading) return;
+    login(form);
   };
+
+  useEffect(() => {
+    if (data?.success) {
+      router.push('/');
+    }
+  }, [router, data]);
 
   return (
     <div>

@@ -1,17 +1,33 @@
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import useMutation from '../lib/client/useMutation';
+import { ResponseType } from '../lib/server/withHandler';
 
 interface CreateAccountForm {
   name: string;
   email: string;
 }
 
+type CreateAccountResponse = ResponseType<null>;
+
 const CreateAccount: NextPage = () => {
   const { register, handleSubmit } = useForm<CreateAccountForm>();
+  const [createAccount, { loading, data }] =
+    useMutation<CreateAccountResponse>('/api/signup');
+  const router = useRouter();
 
   const onValid = (form: CreateAccountForm) => {
-    console.log(form);
+    if (loading) return;
+    createAccount(form);
   };
+
+  useEffect(() => {
+    if (data?.success) {
+      router.push('/log-in');
+    }
+  }, [router, data]);
 
   return (
     <div>
