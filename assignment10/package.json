@@ -6,7 +6,8 @@
     "build": "next build",
     "start": "next start",
     "db-sync": "npx prisma migrate dev",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "lint": "next lint"
   },
   "main": "pages/index.tsx",
   "dependencies": {
@@ -17,6 +18,7 @@
     "@types/react-dom": "18.0.6",
     "autoprefixer": "10.4.7",
     "axios": "^0.27.2",
+    "bcrypt": "^5.0.1",
     "iron-session": "^6.1.3",
     "next": "12.2.2",
     "postcss": "8.4.14",
@@ -31,5 +33,10 @@
   },
   "license": "ISC",
   "keywords": [],
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "eslint-config-next": "^12.2.2",
+    "eslint-plugin-simple-import-sort": "^7.0.0"
+  }
 }

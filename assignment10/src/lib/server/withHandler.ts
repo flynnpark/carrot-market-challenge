@@ -15,16 +15,14 @@ export interface ResponseType {
 }
 
 interface WithHandlerConfig {
-  handler: NextApiHandler<ResponseType>;
   methods: RequestMethod[];
   isPrivate?: boolean;
 }
 
-const withHandler = ({
-  handler,
-  methods,
-  isPrivate = false,
-}: WithHandlerConfig) => {
+const withHandler = (
+  { methods, isPrivate = true }: WithHandlerConfig,
+  handler: NextApiHandler<ResponseType>
+) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     if (isPrivate && !req.session.user) {
       return res.status(401).json({
